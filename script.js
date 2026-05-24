@@ -167,6 +167,28 @@ function showAdminPanel(isAuthenticated) {
 
   loginPanel.classList.toggle('hidden', isAuthenticated);
   editorPanel.classList.toggle('hidden', !isAuthenticated);
+  // Add a visual disabled overlay when not authenticated
+  editorPanel.classList.toggle('admin-disabled', !isAuthenticated);
+
+  // Explicitly hide individual admin sections when not authenticated
+  const adminSections = document.querySelectorAll('.admin-section');
+  adminSections.forEach(sec => {
+    sec.classList.toggle('hidden', !isAuthenticated);
+  });
+
+  // Enable/disable editor inputs and buttons based on auth state
+  setAdminControlsEnabled(isAuthenticated);
+}
+
+function setAdminControlsEnabled(enabled) {
+  const editor = document.getElementById('editor-panel');
+  if (!editor) return;
+  const controls = editor.querySelectorAll('input, textarea, select, button');
+  controls.forEach(el => {
+    // Keep login controls enabled in the login panel
+    if (el.id === 'login-btn' || el.id === 'login-user' || el.id === 'login-pass') return;
+    el.disabled = !enabled;
+  });
 }
 
 function getAuthState() {
@@ -193,6 +215,8 @@ function initializePortfolio() {
 }
 
 function initializeAdmin() {
+  // Clear any previous auth on load so the editor remains hidden until a fresh login
+  setAuthState(false);
   const isAuthenticated = getAuthState();
   showAdminPanel(isAuthenticated);
 
