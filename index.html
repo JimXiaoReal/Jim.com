@@ -20,94 +20,9 @@
         <a href="#awards">Awards</a>
         <a href="#activities">Activities</a>
         <a href="#contact">Contact</a>
+        <a href="admin.html">Admin</a>
       </nav>
     </header>
-
-    <section class="section card editor-card">
-      <h2>Admin Dashboard</h2>
-      <div id="login-panel" class="admin-panel">
-        <label>
-          Username
-          <input id="login-user" type="text" value="admin" />
-        </label>
-        <label>
-          Password
-          <input id="login-pass" type="password" placeholder="Enter password" />
-        </label>
-        <button id="login-btn" type="button">Log in</button>
-        <p class="admin-message" id="login-message"></p>
-        <p class="admin-note">Use username <strong>admin</strong> and password <strong>2084505jim</strong>.</p>
-      </div>
-
-      <div id="editor-panel" class="admin-panel hidden">
-        <p>Use the structured admin form below to add and manage content without editing JSON directly.</p>
-
-        <div class="admin-section" id="page-details-section">
-          <h3>Page details</h3>
-          <label>
-            Name
-            <input id="admin-name" type="text" />
-          </label>
-          <label>
-            Title
-            <input id="admin-title" type="text" />
-          </label>
-          <label>
-            About text
-            <textarea id="admin-intro" rows="3"></textarea>
-          </label>
-          <label>
-            Contact copy
-            <textarea id="admin-contact-copy" rows="2"></textarea>
-          </label>
-        </div>
-
-        <div class="admin-section">
-          <h3>Add a new item</h3>
-          <div class="two-column-grid">
-            <label>
-              Section
-              <select id="add-item-section">
-                <option value="experiences">Experience</option>
-                <option value="awards">Awards</option>
-                <option value="activities">Activities</option>
-              </select>
-            </label>
-            <label>
-              Date
-              <input id="add-item-date" type="text" placeholder="e.g. Summer 2025" />
-            </label>
-          </div>
-          <label>
-            Title
-            <input id="add-item-title" type="text" />
-          </label>
-          <div class="two-column-grid">
-            <label>
-              Organization
-              <input id="add-item-organization" type="text" />
-            </label>
-            <label>
-              Description
-              <textarea id="add-item-description" rows="3"></textarea>
-            </label>
-          </div>
-          <button id="add-item-btn" type="button">Add item</button>
-          <p class="admin-message" id="add-item-message"></p>
-        </div>
-
-        <div class="admin-section">
-          <h3>Current list</h3>
-          <div id="current-items-list"></div>
-        </div>
-
-        <div class="button-row">
-          <button id="save-data-btn" type="button">Save changes</button>
-          <button id="logout-btn" type="button">Log out</button>
-        </div>
-        <p class="admin-message" id="save-message"></p>
-      </div>
-    </section>
 
     <main>
       <section id="about" class="section card">

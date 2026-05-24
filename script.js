@@ -118,6 +118,11 @@ function collectAdminData() {
 }
 
 function removeAdminItem(section, index) {
+  if (!getAuthState()) {
+    showMessage('save-message', 'Log in before editing items.', true);
+    return;
+  }
+
   const list = currentPortfolioData[section];
   if (!Array.isArray(list) || index < 0 || index >= list.length) return;
 
@@ -144,10 +149,15 @@ function saveData(data) {
 }
 
 function updatePage(data) {
-  document.getElementById('name').textContent = data.name || 'Your Name';
-  document.getElementById('title').textContent = data.title || 'Your Title';
-  document.getElementById('intro').textContent = data.intro || '';
-  document.getElementById('contact-copy').textContent = data.contactCopy || '';
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
+
+  setText('name', data.name || 'Your Name');
+  setText('title', data.title || 'Your Title');
+  setText('intro', data.intro || '');
+  setText('contact-copy', data.contactCopy || '');
 
   renderSection('experiences-list', data.experiences);
   renderSection('awards-list', data.awards);
@@ -166,15 +176,8 @@ function showAdminPanel(isAuthenticated) {
   if (!loginPanel || !editorPanel) return;
 
   loginPanel.classList.toggle('hidden', isAuthenticated);
-  editorPanel.classList.toggle('hidden', !isAuthenticated);
-  // Add a visual disabled overlay when not authenticated
   editorPanel.classList.toggle('admin-disabled', !isAuthenticated);
-
-  // Explicitly hide individual admin sections when not authenticated
-  const adminSections = document.querySelectorAll('.admin-section');
-  adminSections.forEach(sec => {
-    sec.classList.toggle('hidden', !isAuthenticated);
-  });
+  editorPanel.setAttribute('aria-disabled', String(!isAuthenticated));
 
   // Enable/disable editor inputs and buttons based on auth state
   setAdminControlsEnabled(isAuthenticated);
@@ -252,6 +255,11 @@ function initializeAdmin() {
 
   if (addItemBtn) {
     addItemBtn.addEventListener('click', () => {
+      if (!getAuthState()) {
+        showMessage('add-item-message', 'Log in before adding items.', true);
+        return;
+      }
+
       const section = document.getElementById('add-item-section')?.value;
       const title = document.getElementById('add-item-title')?.value.trim();
       const organization = document.getElementById('add-item-organization')?.value.trim();
@@ -287,6 +295,11 @@ function initializeAdmin() {
 
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
+      if (!getAuthState()) {
+        showMessage('save-message', 'Log in before saving changes.', true);
+        return;
+      }
+
       const updatedData = collectAdminData();
       saveData(updatedData);
       currentPortfolioData = updatedData;
