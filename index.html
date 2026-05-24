@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Portfolio</p>
+        <h1 id="name">Your Name</h1>
+        <p id="title">Your Title</p>
+      </div>
+      <nav class="site-nav">
+        <a href="#about">About</a>
+        <a href="#experiences">Experience</a>
+        <a href="#awards">Awards</a>
+        <a href="#activities">Activities</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="section card editor-card">
+      <h2>Admin Dashboard</h2>
+      <div id="login-panel" class="admin-panel">
+        <label>
+          Username
+          <input id="login-user" type="text" value="admin" />
+        </label>
+        <label>
+          Password
+          <input id="login-pass" type="password" placeholder="Enter password" />
+        </label>
+        <button id="login-btn" type="button">Log in</button>
+        <p class="admin-message" id="login-message"></p>
+        <p class="admin-note">Use username <strong>admin</strong> and password <strong>2084505jim</strong>.</p>
+      </div>
+
+      <div id="editor-panel" class="admin-panel hidden">
+        <p>Use the structured admin form below to add and manage content without editing JSON directly.</p>
+
+        <div class="admin-section">
+          <h3>Page details</h3>
+          <label>
+            Name
+            <input id="admin-name" type="text" />
+          </label>
+          <label>
+            Title
+            <input id="admin-title" type="text" />
+          </label>
+          <label>
+            About text
+            <textarea id="admin-intro" rows="3"></textarea>
+          </label>
+          <label>
+            Contact copy
+            <textarea id="admin-contact-copy" rows="2"></textarea>
+          </label>
+        </div>
+
+        <div class="admin-section">
+          <h3>Add a new item</h3>
+          <div class="two-column-grid">
+            <label>
+              Section
+              <select id="add-item-section">
+                <option value="experiences">Experience</option>
+                <option value="awards">Awards</option>
+                <option value="activities">Activities</option>
+              </select>
+            </label>
+            <label>
+              Date
+              <input id="add-item-date" type="text" placeholder="e.g. Summer 2025" />
+            </label>
+          </div>
+          <label>
+            Title
+            <input id="add-item-title" type="text" />
+          </label>
+          <div class="two-column-grid">
+            <label>
+              Organization
+              <input id="add-item-organization" type="text" />
+            </label>
+            <label>
+              Description
+              <textarea id="add-item-description" rows="3"></textarea>
+            </label>
+          </div>
+          <button id="add-item-btn" type="button">Add item</button>
+          <p class="admin-message" id="add-item-message"></p>
+        </div>
+
+        <div class="admin-section">
+          <h3>Current list</h3>
+          <div id="current-items-list"></div>
+        </div>
+
+        <div class="button-row">
+          <button id="save-data-btn" type="button">Save changes</button>
+          <button id="logout-btn" type="button">Log out</button>
+        </div>
+        <p class="admin-message" id="save-message"></p>
+      </div>
+    </section>
+
+    <main>
+      <section id="about" class="section card">
+        <h2>About</h2>
+        <p id="intro"></p>
+      </section>
+
+      <section id="experiences" class="section card">
+        <div class="section-header"><h2>Experience</h2></div>
+        <div id="experiences-list" class="grid"></div>
+      </section>
+
+      <section id="awards" class="section card">
+        <div class="section-header"><h2>Awards</h2></div>
+        <div id="awards-list" class="grid"></div>
+      </section>
+
+      <section id="activities" class="section card">
+        <div class="section-header"><h2>Activities</h2></div>
+        <div id="activities-list" class="grid"></div>
+      </section>
+
+      <section id="contact" class="section card contact-card">
+        <h2>Contact</h2>
+        <p id="contact-copy"></p>
+        <div class="contact-list" id="contact-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
