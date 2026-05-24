@@ -34,7 +34,8 @@ Each list entry should use this structure:
   title: 'Role or Award',
   organization: 'School or Company',
   date: '2024',
-  description: 'Short summary of what you achieved.'
+  description: 'Short summary of what you achieved.',
+  picture: 'https://example.com/photo.jpg' // Optional, for awards and activities.
 }
 ```
 

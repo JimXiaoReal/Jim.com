@@ -19,6 +19,17 @@ function createCard(item) {
   description.textContent = item.description;
 
   card.append(title, meta, description);
+
+  if (item.picture) {
+    const pictureLink = document.createElement('a');
+    pictureLink.className = 'picture-link';
+    pictureLink.href = item.picture;
+    pictureLink.target = '_blank';
+    pictureLink.rel = 'noreferrer noopener';
+    pictureLink.textContent = 'View picture';
+    card.appendChild(pictureLink);
+  }
+
   return card;
 }
 
@@ -78,8 +89,28 @@ function updateCurrentItemsList(data) {
         const row = document.createElement('div');
         row.className = 'admin-item-row';
 
+        const controls = document.createElement('div');
+        controls.className = 'admin-item-controls';
+
         const summary = document.createElement('div');
         summary.innerHTML = `<strong>${item.title}</strong><span>${item.organization} · ${item.date}</span>`;
+
+        if (section === 'awards' || section === 'activities') {
+          const pictureLabel = document.createElement('label');
+          pictureLabel.className = 'picture-update-field';
+          pictureLabel.textContent = 'Picture link';
+
+          const pictureInput = document.createElement('input');
+          pictureInput.type = 'url';
+          pictureInput.placeholder = 'https://example.com/photo.jpg';
+          pictureInput.value = item.picture || '';
+          pictureInput.addEventListener('change', () => {
+            updateAdminItemPicture(section, index, pictureInput.value);
+          });
+
+          pictureLabel.appendChild(pictureInput);
+          controls.appendChild(pictureLabel);
+        }
 
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
@@ -87,7 +118,8 @@ function updateCurrentItemsList(data) {
         removeBtn.textContent = 'Remove';
         removeBtn.addEventListener('click', () => removeAdminItem(section, index));
 
-        row.append(summary, removeBtn);
+        controls.appendChild(removeBtn);
+        row.append(summary, controls);
         sectionBlock.appendChild(row);
       });
     }
@@ -130,6 +162,26 @@ function removeAdminItem(section, index) {
   updateCurrentItemsList(currentPortfolioData);
   updatePage(currentPortfolioData);
   showMessage('save-message', 'Item removed. Save changes to persist.', false);
+}
+
+function updateAdminItemPicture(section, index, picture) {
+  if (!getAuthState()) {
+    showMessage('save-message', 'Log in before editing item pictures.', true);
+    return;
+  }
+
+  const list = currentPortfolioData[section];
+  if (!Array.isArray(list) || index < 0 || index >= list.length) return;
+
+  const cleanPicture = picture.trim();
+  if (cleanPicture) {
+    list[index].picture = cleanPicture;
+  } else {
+    delete list[index].picture;
+  }
+
+  updatePage(currentPortfolioData);
+  showMessage('save-message', 'Picture updated. Save changes to persist.', false);
 }
 
 function loadData() {
@@ -227,6 +279,20 @@ function initializeAdmin() {
   const logoutBtn = document.getElementById('logout-btn');
   const saveBtn = document.getElementById('save-data-btn');
   const addItemBtn = document.getElementById('add-item-btn');
+  const addItemSection = document.getElementById('add-item-section');
+  const addItemPictureField = document.getElementById('add-item-picture-field');
+
+  const updatePictureFieldVisibility = () => {
+    if (!addItemSection || !addItemPictureField) return;
+    const supportsPicture = addItemSection.value === 'awards' || addItemSection.value === 'activities';
+    addItemPictureField.classList.toggle('hidden', !supportsPicture);
+  };
+
+  updatePictureFieldVisibility();
+
+  if (addItemSection) {
+    addItemSection.addEventListener('change', updatePictureFieldVisibility);
+  }
 
   if (loginBtn) {
     loginBtn.addEventListener('click', () => {
@@ -265,6 +331,7 @@ function initializeAdmin() {
       const organization = document.getElementById('add-item-organization')?.value.trim();
       const date = document.getElementById('add-item-date')?.value.trim();
       const description = document.getElementById('add-item-description')?.value.trim();
+      const picture = document.getElementById('add-item-picture')?.value.trim();
 
       if (!section || !title || !organization || !date || !description) {
         showMessage('add-item-message', 'Complete all fields before adding an item.', true);
@@ -275,12 +342,18 @@ function initializeAdmin() {
         currentPortfolioData[section] = [];
       }
 
-      currentPortfolioData[section].push({
+      const newItem = {
         title,
         organization,
         date,
         description
-      });
+      };
+
+      if ((section === 'awards' || section === 'activities') && picture) {
+        newItem.picture = picture;
+      }
+
+      currentPortfolioData[section].push(newItem);
 
       updateCurrentItemsList(currentPortfolioData);
       updatePage(currentPortfolioData);
@@ -290,6 +363,7 @@ function initializeAdmin() {
       document.getElementById('add-item-organization').value = '';
       document.getElementById('add-item-date').value = '';
       document.getElementById('add-item-description').value = '';
+      document.getElementById('add-item-picture').value = '';
     });
   }
 

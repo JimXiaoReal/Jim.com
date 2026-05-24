@@ -27,7 +27,8 @@ window.portfolioData = {
       title: "Top Achievement Award",
       organization: "Awards Program",
       date: "2024",
-      description: "Recognized for outstanding leadership, academic excellence, and community engagement."    
+      description: "Recognized for outstanding leadership, academic excellence, and community engagement.",
+      picture: "https://example.com/award-photo.jpg"
     },
     {
       title: "Competition Winner",
@@ -41,7 +42,8 @@ window.portfolioData = {
       title: "Volunteer Mentor",
       organization: "Community Group",
       date: "2023 – Present",
-      description: "Coached younger students in coding and teamwork through hands-on workshops and mentorship sessions."
+      description: "Coached younger students in coding and teamwork through hands-on workshops and mentorship sessions.",
+      picture: "https://example.com/activity-photo.jpg"
     },
     {
       title: "Event Organizer",

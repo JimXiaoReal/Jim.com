@@ -120,6 +120,20 @@ body {
   line-height: 1.65;
 }
 
+.picture-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 14px;
+  color: #312e81;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.picture-link:hover,
+.picture-link:focus-visible {
+  text-decoration: underline;
+}
+
 .contact-card {
   text-align: left;
 }
@@ -276,6 +290,24 @@ body {
   display: block;
   color: #475569;
   font-size: 0.95rem;
+}
+
+.admin-item-controls {
+  display: flex;
+  flex: 1 1 320px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: end;
+}
+
+.picture-update-field {
+  flex: 1 1 220px;
+  max-width: 360px;
+}
+
+.picture-update-field input {
+  margin-top: 6px;
 }
 
 .remove-btn {
