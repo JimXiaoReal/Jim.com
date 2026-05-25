@@ -304,7 +304,7 @@ function initializeAdmin() {
         showAdminPanel(true);
         showMessage('login-message', 'Login successful! You can now edit the page.', false);
       } else {
-        showMessage('login-message', 'Invalid login. Try admin / 2084505jim.', true);
+        showMessage('login-message', 'Invalid username or password.', true);
       }
     });
   }
