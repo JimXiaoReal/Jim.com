@@ -219,8 +219,13 @@ function updatePage(data) {
   setText('intro', data.intro || '');
   setText('contact-copy', data.contactCopy || '');
 
+  const awards = Array.isArray(data.awards) ? data.awards : [];
+  const featuredAwards = awards.filter(item => !item.isSmallAward);
+  const smallAwards = awards.filter(item => item.isSmallAward);
+
   renderSection('experiences-list', data.experiences);
-  renderSection('awards-list', data.awards);
+  renderSection('awards-list', featuredAwards);
+  renderSection('small-awards-list', smallAwards);
   renderSection('activities-list', data.activities);
   renderContact(data.contact);
 }
