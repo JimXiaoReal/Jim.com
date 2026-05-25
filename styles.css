@@ -21,6 +21,32 @@ body {
   padding: 32px 24px 60px;
 }
 
+.welcome-hero {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  text-align: center;
+}
+
+.welcome-logo {
+  width: min(260px, 62vw);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 48px rgba(129, 140, 248, 0.45);
+}
+
+.welcome-hero h1 {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 0.95;
+  color: #f8fafc;
+}
+
 .site-header {
   display: flex;
   flex-wrap: wrap;

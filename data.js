@@ -1,12 +1,12 @@
 window.portfolioData = {
   name: "Your Name",
   title: "Student, Leader, and Creative Thinker",
-  intro: "Welcome! This site presents my awards, experiences, and activities in one place. Edit this file to update your details quickly.",
+  intro: "Welcome! This site presents my awards, experiences, and activities in one place.",
   contactCopy: "I’m happy to connect. Use the links below to reach out or share more about your next opportunity.",
   contact: [
-    { label: "Email", value: "you@example.com", href: "mailto:you@example.com" },
+    { label: "Email", value: "xiaomingjun2025@outlook.com", href: "mailto:xiaomingjun2025@outlook.com" },
     { label: "LinkedIn", value: "linkedin.com/in/your-name", href: "https://www.linkedin.com" },
-    { label: "Portfolio", value: "yourwebsite.com", href: "https://yourwebsite.com" }
+    { label: "Portfolio", value: "https://jimxiaoreal.github.io/Jim.com/", href: "https://jimxiaoreal.github.io/Jim.com/" }
   ],
   experiences: [
     {
