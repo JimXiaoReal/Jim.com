@@ -120,6 +120,22 @@ body {
   line-height: 1.65;
 }
 
+.small-award-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.small-award-card h3 {
+  margin: 0;
+}
+
+.small-award-card .meta {
+  margin: 0;
+  white-space: nowrap;
+}
+
 .picture-link {
   display: inline-flex;
   width: fit-content;

@@ -6,13 +6,19 @@ let currentPortfolioData = {};
 
 function createCard(item) {
   const card = document.createElement('article');
-  card.className = 'item-card';
+  card.className = item.isSmallAward ? 'item-card small-award-card' : 'item-card';
 
   const title = document.createElement('h3');
   title.textContent = item.title;
 
   const meta = document.createElement('div');
   meta.className = 'meta';
+  if (item.isSmallAward) {
+    meta.innerHTML = `<span>${item.date}</span>`;
+    card.append(title, meta);
+    return card;
+  }
+
   meta.innerHTML = `<span>${item.organization}</span><span>${item.date}</span>`;
 
   const description = document.createElement('p');
@@ -93,9 +99,11 @@ function updateCurrentItemsList(data) {
         controls.className = 'admin-item-controls';
 
         const summary = document.createElement('div');
-        summary.innerHTML = `<strong>${item.title}</strong><span>${item.organization} · ${item.date}</span>`;
+        summary.innerHTML = item.isSmallAward
+          ? `<strong>${item.title}</strong><span>Small award · ${item.date}</span>`
+          : `<strong>${item.title}</strong><span>${item.organization} · ${item.date}</span>`;
 
-        if (section === 'awards' || section === 'activities') {
+        if ((section === 'awards' && !item.isSmallAward) || section === 'activities') {
           const pictureLabel = document.createElement('label');
           pictureLabel.className = 'picture-update-field';
           pictureLabel.textContent = 'Picture link';
@@ -281,17 +289,27 @@ function initializeAdmin() {
   const addItemBtn = document.getElementById('add-item-btn');
   const addItemSection = document.getElementById('add-item-section');
   const addItemPictureField = document.getElementById('add-item-picture-field');
+  const addItemOrganizationField = document.getElementById('add-item-organization-field');
+  const addItemDescriptionField = document.getElementById('add-item-description-field');
 
-  const updatePictureFieldVisibility = () => {
-    if (!addItemSection || !addItemPictureField) return;
+  const updateAddItemFieldVisibility = () => {
+    if (!addItemSection) return;
+    const isSmallAward = addItemSection.value === 'small-awards';
     const supportsPicture = addItemSection.value === 'awards' || addItemSection.value === 'activities';
-    addItemPictureField.classList.toggle('hidden', !supportsPicture);
+
+    if (addItemPictureField) {
+      addItemPictureField.classList.toggle('hidden', !supportsPicture);
+    }
+
+    [addItemOrganizationField, addItemDescriptionField].forEach(field => {
+      if (field) field.classList.toggle('hidden', isSmallAward);
+    });
   };
 
-  updatePictureFieldVisibility();
+  updateAddItemFieldVisibility();
 
   if (addItemSection) {
-    addItemSection.addEventListener('change', updatePictureFieldVisibility);
+    addItemSection.addEventListener('change', updateAddItemFieldVisibility);
   }
 
   if (loginBtn) {
@@ -326,14 +344,16 @@ function initializeAdmin() {
         return;
       }
 
-      const section = document.getElementById('add-item-section')?.value;
+      const selectedSection = document.getElementById('add-item-section')?.value;
+      const isSmallAward = selectedSection === 'small-awards';
+      const section = isSmallAward ? 'awards' : selectedSection;
       const title = document.getElementById('add-item-title')?.value.trim();
       const organization = document.getElementById('add-item-organization')?.value.trim();
       const date = document.getElementById('add-item-date')?.value.trim();
       const description = document.getElementById('add-item-description')?.value.trim();
       const picture = document.getElementById('add-item-picture')?.value.trim();
 
-      if (!section || !title || !organization || !date || !description) {
+      if (!section || !title || !date || (!isSmallAward && (!organization || !description))) {
         showMessage('add-item-message', 'Complete all fields before adding an item.', true);
         return;
       }
@@ -342,7 +362,11 @@ function initializeAdmin() {
         currentPortfolioData[section] = [];
       }
 
-      const newItem = {
+      const newItem = isSmallAward ? {
+        title,
+        date,
+        isSmallAward: true
+      } : {
         title,
         organization,
         date,
@@ -357,7 +381,7 @@ function initializeAdmin() {
 
       updateCurrentItemsList(currentPortfolioData);
       updatePage(currentPortfolioData);
-      showMessage('add-item-message', `Added a new item to ${section}.`, false);
+      showMessage('add-item-message', `Added a new item to ${isSmallAward ? 'small awards' : section}.`, false);
 
       document.getElementById('add-item-title').value = '';
       document.getElementById('add-item-organization').value = '';
