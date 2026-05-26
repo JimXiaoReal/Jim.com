@@ -5,7 +5,6 @@ window.portfolioData = {
   contactCopy: "I’m happy to connect. Use the links below to reach out or share more about your next opportunity.",
   contact: [
     { label: "Email", value: "xiaomingjun2025@outlook.com", href: "mailto:xiaomingjun2025@outlook.com" },
-    { label: "LinkedIn", value: "linkedin.com/in/your-name", href: "https://www.linkedin.com" },
     { label: "Portfolio", value: "https://jimxiaoreal.github.io/Jim.com/", href: "https://jimxiaoreal.github.io/Jim.com/" }
   ],
   experiences: [

@@ -72,6 +72,16 @@ function renderContact(contact) {
   });
 }
 
+function normalizeContactData(data) {
+  return {
+    ...data,
+    contact: [
+      { label: 'Email', value: 'xiaomingjun2025@outlook.com', href: 'mailto:xiaomingjun2025@outlook.com' },
+      { label: 'Portfolio', value: 'https://jimxiaoreal.github.io/Jim.com/', href: 'https://jimxiaoreal.github.io/Jim.com/' }
+    ]
+  };
+}
+
 function updateCurrentItemsList(data) {
   const list = document.getElementById('current-items-list');
   if (!list) return;
@@ -196,12 +206,12 @@ function loadData() {
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored) {
     try {
-      return JSON.parse(stored);
+      return normalizeContactData(JSON.parse(stored));
     } catch (error) {
       console.warn('Invalid stored portfolio data, falling back to defaults.', error);
     }
   }
-  return window.portfolioData || {};
+  return normalizeContactData(window.portfolioData || {});
 }
 
 function saveData(data) {
